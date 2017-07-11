@@ -1,0 +1,51 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+            android:id="@+id/view_video_step"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
+        <ImageView
+            android:id="@+id/iv_thumbnail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_10dp"
+            android:layout_marginLeft="@dimen/padding_8dp"
+            android:layout_marginStart="@dimen/padding_8dp"
+            android:layout_marginEnd="@dimen/padding_8dp"
+            android:layout_marginRight="@dimen/padding_8dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_video_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_23sp"
+            android:text="@string/video_title"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/tv_description_step"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Description of the step "
+            android:textStyle="normal"
+            android:layout_marginTop="@dimen/padding_10dp"
+            android:layout_marginLeft="@dimen/padding_8dp"
+            android:layout_marginStart="@dimen/padding_8dp"
+            android:layout_marginEnd="@dimen/padding_8dp"
+            android:layout_marginRight="@dimen/padding_8dp"
+            android:textSize="@dimen/text_19sp"/>
+
+    </LinearLayout>
+
+</ScrollView>

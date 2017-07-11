@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_15sp">15sp</dimen>
+    <dimen name="text_23sp">23sp</dimen>
+    <dimen name="text_30sp">30sp</dimen>
+    <integer name="no_of_columns">4</integer>
+</resources>
