@@ -6,11 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-public class RecipeDetailActivity extends AppCompatActivity implements IngredientsStepsFragment.DetailStepOnClickListener{
+public class RecipeDetailActivity extends AppCompatActivity implements RecipeDetailFragment.DetailStepOnClickListener{
 
 
     Recipe recipe;
-    IngredientsStepsFragment ingredientsStepsFragment;
+    RecipeDetailFragment recipeDetailFragment;
     VideoDescriptionFragment videoDescriptionFragment;
 
     @Override
@@ -19,18 +19,21 @@ public class RecipeDetailActivity extends AppCompatActivity implements Ingredien
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_recipe_detail);
 
-        recipe = getIntent().getParcelableExtra("Recipe");
+        //geting the recipe obj from recipelistActivity
+        recipe = getIntent().getParcelableExtra(getString(R.string.intent_recipe));
         ArrayList<Ingredient> ingredientArrayList = recipe.ingredientsArrayList;
         ArrayList<Step> stepsArrayList = recipe.stepsArrayList;
 
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("Ingredients",ingredientArrayList);
-        bundle.putParcelableArrayList("Steps",stepsArrayList);
-        ingredientsStepsFragment = new IngredientsStepsFragment();
-        ingredientsStepsFragment.setArguments(bundle);
+
+        //Setting the argument for recipedetailfragment with ingredient list and step list.
+        bundle.putParcelableArrayList(getString(R.string.ingredient_extra),ingredientArrayList);
+        bundle.putParcelableArrayList(getString(R.string.step_extra),stepsArrayList);
+        recipeDetailFragment = new RecipeDetailFragment();
+        recipeDetailFragment.setArguments(bundle);
 
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.fl_fragment_detail,ingredientsStepsFragment).commit();
+        fragmentTransaction.add(R.id.fl_fragment_detail, recipeDetailFragment).commit();
 
 
         // When Two pane layout is true
@@ -38,7 +41,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements Ingredien
             videoDescriptionFragment = new VideoDescriptionFragment();
             Bundle bundleVDetails = new Bundle();
             bundleVDetails.putString(getString(R.string.video_url),stepsArrayList.get(0).videoUrl);
-            bundleVDetails.putString(getString(R.string.steps_details),stepsArrayList.get(0).description);
+            bundleVDetails.putString(getString(R.string.description_url),stepsArrayList.get(0).description);
             bundleVDetails.putString(getString(R.string.thumb_url),stepsArrayList.get(0).thumbnailUrl);
             videoDescriptionFragment.setArguments(bundleVDetails);
 
@@ -56,7 +59,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements Ingredien
             intent.putExtras(bundle);
             startActivity(intent);
         }else{
-            //for tablets
+            //for widerScreen
             videoDescriptionFragment = new VideoDescriptionFragment();
             videoDescriptionFragment.setArguments(bundle);
             android.support.v4.app.FragmentTransaction videoFragmentTransaction = getSupportFragmentManager().beginTransaction();

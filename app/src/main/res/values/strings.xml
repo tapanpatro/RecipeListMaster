@@ -2,15 +2,20 @@
     <string name="app_name">RecipeMaster</string>
     <string name="str_servings">servings</string>
     <string name="str_recipe_name">recipe Name</string>
-    <string name="video_url">Video URL</string>
+    <string name="video_url">Video Url</string>
+    <string name="thumb_url">Thumb Url</string>
+    <string name="description_url">Description Url</string>
+    <string name="intent_recipe">Recipe</string>
     <string name="steps_details">Step Details</string>
+
+    <string name="ingredient_extra">Ingredients List</string>
+    <string name="step_extra">Steps List</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="video_url_step">VIDEO URL</string>
     <string name="step_description">STEP DESCRIPTION</string>
     <string name="img_thumbnail">IMAGE THUMBNAIL</string>
-    <string name="thumb_url">THUMB URL</string>
     <string name="video_title">Video Title</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>

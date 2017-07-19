@@ -24,7 +24,7 @@ public class VideoDescriptionActivity extends AppCompatActivity {
         }else{
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        setContentView(R.layout.activity_step_video_and_description);
+        setContentView(R.layout.activity_video_description);
 
 
         //creating a new fragment when any fragment does not exists

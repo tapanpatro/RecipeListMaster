@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 public class IngredientsRecyclerViewAdapter extends RecyclerView.Adapter<IngredientsRecyclerViewAdapter.ViewHolder> {
 
+
     private ArrayList<Ingredient> ingredientArrayList;
 
     public IngredientsRecyclerViewAdapter(ArrayList<Ingredient> ingredientArrayList){
@@ -23,6 +24,8 @@ public class IngredientsRecyclerViewAdapter extends RecyclerView.Adapter<Ingredi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+
+        //inflating the layout
         View view = inflater.inflate(R.layout.single_item_ingredient,parent,false);
         return new ViewHolder(view);
     }
@@ -48,7 +51,7 @@ public class IngredientsRecyclerViewAdapter extends RecyclerView.Adapter<Ingredi
 
         public void bind(int position) {
             String quantity = ingredientArrayList.get(position).quantity + " "+ ingredientArrayList.get(position).measure;
-            mTextIngName.setText("   ."+ingredientArrayList.get(position).ingredients+ quantity);
+            mTextIngName.setText("."+ingredientArrayList.get(position).ingredients+ quantity);
         }
     }
 

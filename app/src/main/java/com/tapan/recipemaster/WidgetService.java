@@ -3,6 +3,8 @@ package com.tapan.recipemaster;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -30,7 +32,7 @@ public class WidgetService extends RemoteViewsService {
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return null;
+        return new RecipeRemoteViewFactory(this.getApplicationContext(),intent);
     }
 
     private class RecipeRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory{
@@ -50,11 +52,12 @@ public class WidgetService extends RemoteViewsService {
             appWidgetManager = AppWidgetManager.getInstance(context);
             appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,AppWidgetManager.INVALID_APPWIDGET_ID);
         }
+
         @Override
         public void onCreate() {
             //Make the http request here
             RequestQueue requestQueue = Volley.newRequestQueue(context);
-            if (appConfig.isNetworkAvailable()){
+            if (isNetworkAvailableWidget()){
                 JsonArrayRequest jsonArrayRequest = getJsonArray(appConfig.BASE_URL);
                 requestQueue.add(jsonArrayRequest);
             }
@@ -191,6 +194,13 @@ public class WidgetService extends RemoteViewsService {
             return true;
         }
 
+    }
+
+    private boolean isNetworkAvailableWidget() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 }

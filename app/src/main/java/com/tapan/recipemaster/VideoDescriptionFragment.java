@@ -114,7 +114,7 @@ public class VideoDescriptionFragment extends Fragment implements ExoPlayer.Even
         //get the data from the parent activity about the url and the description
         Bundle bundle = getArguments();
         videoUrl = bundle.getString(getString(R.string.video_url));
-        description = bundle.getString(getString(R.string.steps_details));
+        description = bundle.getString(getString(R.string.description_url));
         thumbNail = bundle.getString(getString(R.string.thumb_url));
 
 

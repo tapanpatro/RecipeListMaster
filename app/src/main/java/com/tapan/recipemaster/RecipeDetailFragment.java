@@ -15,7 +15,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class IngredientsStepsFragment extends Fragment  implements StepsRecyclerViewAdapter.StepsOnClickListener{
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link RecipeDetailFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link RecipeDetailFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class RecipeDetailFragment extends Fragment  implements StepsRecyclerViewAdapter.StepsOnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -46,7 +54,7 @@ public class IngredientsStepsFragment extends Fragment  implements StepsRecycler
     TextView mTextStepsHeader;
 
 
-    public IngredientsStepsFragment() {
+    public RecipeDetailFragment() {
         // Required empty public constructor
     }
 
@@ -56,11 +64,11 @@ public class IngredientsStepsFragment extends Fragment  implements StepsRecycler
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment IngredientsStepsFragment.
+     * @return A new instance of fragment RecipeDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static IngredientsStepsFragment newInstance(String param1, String param2) {
-        IngredientsStepsFragment fragment = new IngredientsStepsFragment();
+    public static RecipeDetailFragment newInstance(String param1, String param2) {
+        RecipeDetailFragment fragment = new RecipeDetailFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -81,14 +89,21 @@ public class IngredientsStepsFragment extends Fragment  implements StepsRecycler
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_ingredients_steps, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
 
-        ingredientArrayList = getArguments().getParcelableArrayList("Ingredients");
-        stepsArrayList = getArguments().getParcelableArrayList("Steps");
+        //getting list of ingredients and steps from detail Activity
+        ingredientArrayList = getArguments().getParcelableArrayList(getString(R.string.ingredient_extra));
+        stepsArrayList = getArguments().getParcelableArrayList(getString(R.string.step_extra));
+
+        //using butter knife to bind the view
         ButterKnife.bind(this,rootView);
+
+        //setting the adapter for ingredients
         IngredientsRecyclerViewAdapter ingredientsRecyclerViewAdapter=new IngredientsRecyclerViewAdapter(ingredientArrayList);
         mRecyclerViewIngredients.setAdapter(ingredientsRecyclerViewAdapter);
         mRecyclerViewIngredients.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        //setting the adapter for steps
         StepsRecyclerViewAdapter stepsRecyclerViewAdapter = new StepsRecyclerViewAdapter(stepsArrayList,this);
         mRecyclerViewSteps.setAdapter(stepsRecyclerViewAdapter);
         mRecyclerViewSteps.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -101,9 +116,9 @@ public class IngredientsStepsFragment extends Fragment  implements StepsRecycler
 
         DetailStepOnClickListener detailStepOnClickListener =(DetailStepOnClickListener) getActivity();
         Bundle bundle = new Bundle();
-        bundle.putString(getString(R.string.video_url_step),stepsArrayList.get(position).videoUrl);
-        bundle.putString(getString(R.string.step_description),stepsArrayList.get(position).description);
-        bundle.putString(getString(R.string.img_thumbnail),stepsArrayList.get(position).thumbnailUrl);
+        bundle.putString(getString(R.string.video_url),stepsArrayList.get(position).videoUrl);
+        bundle.putString(getString(R.string.description_url),stepsArrayList.get(position).description);
+        bundle.putString(getString(R.string.thumb_url),stepsArrayList.get(position).thumbnailUrl);
         detailStepOnClickListener.onDetailStepItemClicked(bundle);
 
     }

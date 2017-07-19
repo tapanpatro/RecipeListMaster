@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
@@ -14,26 +14,26 @@
             android:id="@+id/img_recipe"
             android:src="@mipmap/ic_launcher"
             android:layout_weight="0.5"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dimen_0do"
             android:layout_height="match_parent" />
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dimen_0do"
             android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/tv_recipe_name"
                 android:text="@string/str_recipe_name"
-                android:textSize="30sp"
+                android:textSize="@dimen/dimen_30dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
             <TextView
                 android:id="@+id/tv_servings"
                 android:text="@string/str_servings"
-                android:textSize="23sp"
+                android:textSize="@dimen/text_23sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

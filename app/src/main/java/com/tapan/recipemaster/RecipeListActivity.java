@@ -29,7 +29,6 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListA
 
     @BindView(R.id.rv_recyclerView)
     RecyclerView mRecyclerView;
-    RecyclerView recipeListRecyclerView;
     ArrayList<Recipe> recipeArrayList;
     RecipeListAdapter recipeListAdapter;
 
@@ -46,8 +45,8 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListA
         recipeArrayList = new ArrayList<>();
         recipeListAdapter = new RecipeListAdapter(recipeArrayList,this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,getResources().getInteger(R.integer.no_of_columns));
-        recipeListRecyclerView.setAdapter(recipeListAdapter);
-        recipeListRecyclerView.setLayoutManager(gridLayoutManager);
+        mRecyclerView.setAdapter(recipeListAdapter);
+        mRecyclerView.setLayoutManager(gridLayoutManager);
 
 
         RequestQueue requestQueue = Volley.newRequestQueue(RecipeListActivity.this);
@@ -57,7 +56,7 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListA
             countingIdlingResource.increment();
             requestQueue.add(jsonArrayRequest);
         }else {
-
+            Toast.makeText(RecipeListActivity.this,"Please check your Internet Connection! ",Toast.LENGTH_LONG).show();
         }
     }
 
@@ -68,17 +67,15 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListA
             public void onResponse(JSONArray response) {
                 recipeArrayList = parseRecipeJson(response);
                 recipeListAdapter = new RecipeListAdapter(recipeArrayList,RecipeListActivity.this);
-                recipeListRecyclerView.setAdapter(recipeListAdapter);
-                recipeListRecyclerView.invalidate();
+                mRecyclerView.setAdapter(recipeListAdapter);
+                mRecyclerView.invalidate();
                 countingIdlingResource.decrement();
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast toast = Toast.makeText(RecipeListActivity.this,"Check your Connection!",Toast.LENGTH_LONG);
-                toast.show();
+                Toast.makeText(RecipeListActivity.this,"No Internet Connection! ",Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -132,8 +129,7 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListA
             }
         }else{
 
-            Toast toast = Toast.makeText(RecipeListActivity.this,"Check your Connection!",Toast.LENGTH_LONG);
-            toast.show();
+            Toast.makeText(RecipeListActivity.this,"No Internet Connection",Toast.LENGTH_LONG).show();
         }
         return returnedRecipeList;
     }
@@ -141,8 +137,10 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListA
 
     @Override
     public void onRecipeItemClicked(Recipe recipe) {
+
+        //creating an intent for recipeDetailActivity with recipe obj as extra
         Intent intent = new Intent(RecipeListActivity.this,RecipeDetailActivity.class);
-        intent.putExtra("Recipe",recipe);
+        intent.putExtra(getString(R.string.intent_recipe),recipe);
         startActivity(intent);
     }
 

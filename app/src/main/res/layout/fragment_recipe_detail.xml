@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.tapan.recipemaster.IngredientsStepsFragment">
+    tools:context="com.tapan.recipemaster.RecipeDetailFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="@dimen/padding_10dp">
 
             <LinearLayout
                 android:background="@color/colorAccent"
@@ -26,9 +26,9 @@
                     android:layout_height="wrap_content"
                     android:text="Ingredients"
                     android:textColor="#FFF"
-                    android:textSize="23sp" />
+                    android:textSize="@dimen/text_23sp" />
 
-                <android.support.v7.app.AlertController.RecycleListView
+                <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_ingredients"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -46,10 +46,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Steps"
-                    android:textColor="#000"
-                    android:textSize="23sp" />
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/text_23sp" />
 
-                <android.support.v7.app.AlertController.RecycleListView
+                <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_steps"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
