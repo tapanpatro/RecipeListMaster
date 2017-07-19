@@ -12,18 +12,18 @@ import java.util.ArrayList;
  * Created by hp on 7/11/2017.
  */
 
-public class StepsRecyclerViewAdapter extends RecyclerView.Adapter<StepsRecyclerViewAdapter.ViewHolder> {
+public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> {
 
     private ArrayList<Step> stepArrayList;
     private StepsOnClickListener stepsOnClickListener;
 
-    public StepsRecyclerViewAdapter(ArrayList<Step> stepArrayList, StepsOnClickListener stepsOnClickListener){
+    public StepsAdapter(ArrayList<Step> stepArrayList, StepsOnClickListener stepsOnClickListener){
         this.stepArrayList= stepArrayList;
         this.stepsOnClickListener = stepsOnClickListener;
     }
 
     @Override
-    public StepsRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public StepsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.single_item_step,parent,false);
         return new ViewHolder(view);

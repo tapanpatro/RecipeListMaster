@@ -12,12 +12,29 @@ import java.util.ArrayList;
  * Created by hp on 7/11/2017.
  */
 
-public class IngredientsRecyclerViewAdapter extends RecyclerView.Adapter<IngredientsRecyclerViewAdapter.ViewHolder> {
+public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.ViewHolder> {
 
 
-    private ArrayList<Ingredient> ingredientArrayList;
+    ArrayList<Ingredient> ingredientArrayList;
 
-    public IngredientsRecyclerViewAdapter(ArrayList<Ingredient> ingredientArrayList){
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
+
+        TextView mTextIngName;
+
+        private ViewHolder(View view){
+            super(view);
+            mTextIngName = (TextView) view.findViewById(R.id.tv_ingrident);
+        }
+
+        void bind(int position) {
+            String quantity = ingredientArrayList.get(position).quantity + " "+ ingredientArrayList.get(position).measure;
+            mTextIngName.setText("."+ingredientArrayList.get(position).ingredients+ quantity);
+        }
+    }
+
+
+    public IngredientsAdapter(ArrayList<Ingredient> ingredientArrayList){
         this.ingredientArrayList=ingredientArrayList;
     }
 
@@ -38,21 +55,6 @@ public class IngredientsRecyclerViewAdapter extends RecyclerView.Adapter<Ingredi
     @Override
     public int getItemCount() {
         return ingredientArrayList.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder{
-
-        TextView mTextIngName;
-
-        public ViewHolder(View view){
-            super(view);
-            mTextIngName = (TextView) view.findViewById(R.id.tv_ingrident);
-        }
-
-        public void bind(int position) {
-            String quantity = ingredientArrayList.get(position).quantity + " "+ ingredientArrayList.get(position).measure;
-            mTextIngName.setText("."+ingredientArrayList.get(position).ingredients+ quantity);
-        }
     }
 
 }

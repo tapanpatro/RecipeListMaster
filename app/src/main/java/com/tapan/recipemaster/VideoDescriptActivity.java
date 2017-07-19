@@ -8,33 +8,32 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class VideoDescriptionActivity extends AppCompatActivity {
+public class VideoDescriptActivity extends AppCompatActivity {
 
-    VideoDescriptionFragment videoDescriptionFragment;
+    VideoDescriptFragment videoDescriptFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-            //Get full screen in landscape mode
-            requestWindowFeature(Window.FEATURE_NO_TITLE); //Remove title bar
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);//Remove notification bar
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             ActionBar actionBar = getSupportActionBar();
             actionBar.hide();
         }else{
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        setContentView(R.layout.activity_video_description);
+        setContentView(R.layout.activity_video_descript);
 
 
         //creating a new fragment when any fragment does not exists
         if (savedInstanceState ==null){
-            videoDescriptionFragment = new VideoDescriptionFragment();
+            videoDescriptFragment = new VideoDescriptFragment();
             //Passing the data to the fragment
-            videoDescriptionFragment.setArguments(getIntent().getExtras());
+            videoDescriptFragment.setArguments(getIntent().getExtras());
 
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.fl_fragment_video_detail,videoDescriptionFragment).commit();
+            fragmentTransaction.add(R.id.fl_fragment_video_detail, videoDescriptFragment).commit();
         }
     }
 

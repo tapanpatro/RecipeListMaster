@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
  * Use the {@link RecipeDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecipeDetailFragment extends Fragment  implements StepsRecyclerViewAdapter.StepsOnClickListener{
+public class RecipeDetailFragment extends Fragment  implements StepsAdapter.StepsOnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -98,17 +98,24 @@ public class RecipeDetailFragment extends Fragment  implements StepsRecyclerView
         //using butter knife to bind the view
         ButterKnife.bind(this,rootView);
 
+
+        settingAdapterForIngStep();
+
+        return rootView;
+    }
+
+    private void settingAdapterForIngStep() {
+
         //setting the adapter for ingredients
-        IngredientsRecyclerViewAdapter ingredientsRecyclerViewAdapter=new IngredientsRecyclerViewAdapter(ingredientArrayList);
-        mRecyclerViewIngredients.setAdapter(ingredientsRecyclerViewAdapter);
+        IngredientsAdapter ingredientsAdapter =new IngredientsAdapter(ingredientArrayList);
+        mRecyclerViewIngredients.setAdapter(ingredientsAdapter);
         mRecyclerViewIngredients.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         //setting the adapter for steps
-        StepsRecyclerViewAdapter stepsRecyclerViewAdapter = new StepsRecyclerViewAdapter(stepsArrayList,this);
-        mRecyclerViewSteps.setAdapter(stepsRecyclerViewAdapter);
+        StepsAdapter stepsAdapter = new StepsAdapter(stepsArrayList,this);
+        mRecyclerViewSteps.setAdapter(stepsAdapter);
         mRecyclerViewSteps.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        return rootView;
     }
 
     @Override

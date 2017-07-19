@@ -11,7 +11,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
 
     Recipe recipe;
     RecipeDetailFragment recipeDetailFragment;
-    VideoDescriptionFragment videoDescriptionFragment;
+    VideoDescriptFragment videoDescriptFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +38,15 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
 
         // When Two pane layout is true
         if (findViewById(R.id.fl_fragment_video_detail) !=null){
-            videoDescriptionFragment = new VideoDescriptionFragment();
+            videoDescriptFragment = new VideoDescriptFragment();
             Bundle bundleVDetails = new Bundle();
             bundleVDetails.putString(getString(R.string.video_url),stepsArrayList.get(0).videoUrl);
             bundleVDetails.putString(getString(R.string.description_url),stepsArrayList.get(0).description);
             bundleVDetails.putString(getString(R.string.thumb_url),stepsArrayList.get(0).thumbnailUrl);
-            videoDescriptionFragment.setArguments(bundleVDetails);
+            videoDescriptFragment.setArguments(bundleVDetails);
 
             android.support.v4.app.FragmentTransaction videoFragmentTransaction = getSupportFragmentManager().beginTransaction();
-            videoFragmentTransaction.add(R.id.fl_fragment_video_detail, videoDescriptionFragment).commit();
+            videoFragmentTransaction.add(R.id.fl_fragment_video_detail, videoDescriptFragment).commit();
         }
 
     }
@@ -55,15 +55,15 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
     @Override
     public void onDetailStepItemClicked(Bundle bundle) {
         if (findViewById(R.id.fl_fragment_video_detail) ==null){
-            Intent intent = new Intent(this,VideoDescriptionActivity.class);
+            Intent intent = new Intent(this,VideoDescriptActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
         }else{
             //for widerScreen
-            videoDescriptionFragment = new VideoDescriptionFragment();
-            videoDescriptionFragment.setArguments(bundle);
+            videoDescriptFragment = new VideoDescriptFragment();
+            videoDescriptFragment.setArguments(bundle);
             android.support.v4.app.FragmentTransaction videoFragmentTransaction = getSupportFragmentManager().beginTransaction();
-            videoFragmentTransaction.replace(R.id.fl_fragment_video_detail, videoDescriptionFragment).commit();
+            videoFragmentTransaction.replace(R.id.fl_fragment_video_detail, videoDescriptFragment).commit();
         }
 
     }

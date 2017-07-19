@@ -40,12 +40,12 @@ import static android.content.ContentValues.TAG;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link VideoDescriptionFragment.OnFragmentInteractionListener} interface
+ * {@link VideoDescriptFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link VideoDescriptionFragment#newInstance} factory method to
+ * Use the {@link VideoDescriptFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class VideoDescriptionFragment extends Fragment implements ExoPlayer.EventListener{
+public class VideoDescriptFragment extends Fragment implements ExoPlayer.EventListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -74,7 +74,7 @@ public class VideoDescriptionFragment extends Fragment implements ExoPlayer.Even
     private TextView mTextVideoTitle;
     private ImageView mImageThumbnail;
 
-    public VideoDescriptionFragment() {
+    public VideoDescriptFragment() {
         // Required empty public constructor
     }
 
@@ -84,11 +84,11 @@ public class VideoDescriptionFragment extends Fragment implements ExoPlayer.Even
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment VideoDescriptionFragment.
+     * @return A new instance of fragment VideoDescriptFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static VideoDescriptionFragment newInstance(String param1, String param2) {
-        VideoDescriptionFragment fragment = new VideoDescriptionFragment();
+    public static VideoDescriptFragment newInstance(String param1, String param2) {
+        VideoDescriptFragment fragment = new VideoDescriptFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -109,7 +109,7 @@ public class VideoDescriptionFragment extends Fragment implements ExoPlayer.Even
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_video_description, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_video_descript, container, false);
 
         //get the data from the parent activity about the url and the description
         Bundle bundle = getArguments();

@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.tapan.recipemaster.utils.AppConfig;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -100,7 +101,6 @@ public class WidgetService extends RemoteViewsService {
                         JSONArray stepsJsonArray = obj.getJSONArray("steps");
                         servings = obj.getInt("servings");
 
-                        //Creating Arraylist out of JSONArray
                         for (int j=0;j<ingredientsJsonArray.length();j++){
                             JSONObject ingredientsObject = ingredientsJsonArray.getJSONObject(j);
                             double quantity = ingredientsObject.getDouble("quantity");
@@ -118,8 +118,6 @@ public class WidgetService extends RemoteViewsService {
                             String thumbnailUrl = stepsJsonObject.getString("thumbnailURL");
                             steps.add(new Step(stepId,shortDescription,description,videoUrl,thumbnailUrl));
                         }
-                        Log.v("ingredients "+i,ingredients.size()+" ");
-                        Log.v("steps "+i,steps.size()+" ");
                         returnedRecipeList.add(new Recipe(recipeId,name,ingredients,steps,servings));
                     }
                 }catch (JSONException e){
@@ -148,11 +146,10 @@ public class WidgetService extends RemoteViewsService {
 
         @Override
         public RemoteViews getViewAt(int position) {
-            //Add the data to individual item here.
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(),R.layout.single_item_widget);
             if (recipeArrayList !=null){
                 ingredientsList = recipeArrayList.get(position).ingredientsArrayList;
-                StringBuilder ingredientDescription = new StringBuilder();
+                /*StringBuilder ingredientDescription = new StringBuilder();
                 for (Ingredient ingredient: ingredientsList){
                     ingredientDescription.append(" * ");
                     ingredientDescription.append(ingredient.quantity);
@@ -161,15 +158,15 @@ public class WidgetService extends RemoteViewsService {
                     ingredientDescription.append(" - ");
                     ingredientDescription.append(ingredient.ingredients);
                     ingredientDescription.append("\n");
-                }
+                }*/
                 remoteViews.setTextViewText(R.id.widget_stackview_recipe_title,recipeArrayList.get(position).name);
-                remoteViews.setTextViewText(R.id.widget_stackView_recipe_ingredients,ingredientDescription);
+                remoteViews.setTextViewText(R.id.widget_stackView_recipe_ingredients,String.valueOf(ingredientsList.get(position).quantity));
                 Bundle bundle = new Bundle();
-                bundle.putInt(WidgetProvider.ID_TAG_FOR_RECIPE, position);
+                bundle.putInt("extra_position", position);
                 Intent fillInIntent = new Intent();
                 fillInIntent.putExtras(bundle);
             }else {
-                Log.v(TAG,"Recipe list null");
+
             }
             return remoteViews;
         }
@@ -200,7 +197,9 @@ public class WidgetService extends RemoteViewsService {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+
+
+        return activeNetworkInfo.isConnected();
     }
 
 }

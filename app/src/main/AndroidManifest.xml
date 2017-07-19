@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".RecipeDetailActivity" />
-        <activity android:name=".VideoDescriptionActivity" />
+        <activity android:name=".VideoDescriptActivity" />
 
         <receiver android:name=".WidgetProvider">
             <intent-filter>

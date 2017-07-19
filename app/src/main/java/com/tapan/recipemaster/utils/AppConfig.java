@@ -1,4 +1,4 @@
-package com.tapan.recipemaster;
+package com.tapan.recipemaster.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
