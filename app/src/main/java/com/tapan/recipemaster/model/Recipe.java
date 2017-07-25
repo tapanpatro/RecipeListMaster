@@ -1,4 +1,4 @@
-package com.tapan.recipemaster;
+package com.tapan.recipemaster.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -11,16 +11,18 @@ import java.util.ArrayList;
 
 public class Recipe implements Parcelable {
 
-    int recipeId;
-    String name;
-    ArrayList<Ingredient> ingredientsArrayList;
-    ArrayList<Step> stepsArrayList;
-    int servings;
+    public int recipeId;
+    public String name;
+    public String imageUrl;
+    public ArrayList<Ingredient> ingredientsArrayList;
+    public ArrayList<Step> stepsArrayList;
+    public int servings;
 
 
-    public Recipe(int recipeId, String name, ArrayList<Ingredient> ingredientsArrayList, ArrayList<Step> stepsArrayList, int servings) {
+    public Recipe(int recipeId, String name, String imageUrl, ArrayList<Ingredient> ingredientsArrayList, ArrayList<Step> stepsArrayList, int servings) {
         this.recipeId = recipeId;
         this.name = name;
+        this.imageUrl = imageUrl;
         this.ingredientsArrayList = ingredientsArrayList;
         this.stepsArrayList = stepsArrayList;
         this.servings = servings;
@@ -35,6 +37,7 @@ public class Recipe implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.recipeId);
         dest.writeString(this.name);
+        dest.writeString(this.imageUrl);
         dest.writeTypedList(this.ingredientsArrayList);
         dest.writeTypedList(this.stepsArrayList);
         dest.writeInt(this.servings);
@@ -43,6 +46,7 @@ public class Recipe implements Parcelable {
     protected Recipe(Parcel in) {
         this.recipeId = in.readInt();
         this.name = in.readString();
+        this.imageUrl = in.readString();
         this.ingredientsArrayList = in.createTypedArrayList(Ingredient.CREATOR);
         this.stepsArrayList = in.createTypedArrayList(Step.CREATOR);
         this.servings = in.readInt();

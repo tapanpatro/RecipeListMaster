@@ -1,4 +1,4 @@
-package com.tapan.recipemaster;
+package com.tapan.recipemaster.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -9,16 +9,15 @@ import android.os.Parcelable;
 
 public class Step implements Parcelable {
 
+    public int stepId;
+    public String stepDescription;
+    public String description;
+    public String videoUrl;
+    public String thumbnailUrl;
 
-    int stepId;
-    String shortDescription;
-    String description;
-    String videoUrl;
-    String thumbnailUrl;
-
-    public Step(int stepId, String shortDescription , String description, String videoUrl , String thumbnailUrl){
+    public Step(int stepId, String stepDescription, String description, String videoUrl , String thumbnailUrl){
         this.stepId = stepId;
-        this.shortDescription=shortDescription;
+        this.stepDescription = stepDescription;
         this.description=description;
         this.videoUrl=videoUrl;
         this.thumbnailUrl=thumbnailUrl;
@@ -32,15 +31,15 @@ public class Step implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.stepId);
-        dest.writeString(this.shortDescription);
+        dest.writeString(this.stepDescription);
         dest.writeString(this.description);
         dest.writeString(this.videoUrl);
         dest.writeString(this.thumbnailUrl);
     }
 
-    protected Step(Parcel in) {
+    public Step(Parcel in) {
         this.stepId = in.readInt();
-        this.shortDescription = in.readString();
+        this.stepDescription = in.readString();
         this.description = in.readString();
         this.videoUrl = in.readString();
         this.thumbnailUrl = in.readString();

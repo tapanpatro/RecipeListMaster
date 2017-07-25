@@ -1,34 +1,34 @@
-package com.tapan.recipemaster;
+package com.tapan.recipemaster.activity;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.tapan.recipemaster.R;
+import com.tapan.recipemaster.fragment.VideoDescriptFragment;
+
 public class VideoDescriptActivity extends AppCompatActivity {
 
-    VideoDescriptFragment videoDescriptFragment;
+    VideoDescriptFragment videoDescriptFragment = new VideoDescriptFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             requestWindowFeature(Window.FEATURE_NO_TITLE);
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            ActionBar actionBar = getSupportActionBar();
-            actionBar.hide();
-        }else{
+            getSupportActionBar().hide();
+        } else {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         setContentView(R.layout.activity_video_descript);
 
 
         //creating a new fragment when any fragment does not exists
-        if (savedInstanceState ==null){
-            videoDescriptFragment = new VideoDescriptFragment();
+        if (savedInstanceState == null) {
             //Passing the data to the fragment
             videoDescriptFragment.setArguments(getIntent().getExtras());
 
@@ -39,8 +39,7 @@ public class VideoDescriptActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 return true;

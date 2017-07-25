@@ -1,29 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/primary_light"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/widget_stackview_recipe_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/dimen_5dp"
-        android:gravity="center"
-        android:text="@string/recipe_name"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/dimen_25dp"
-        android:textStyle="bold" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_widget_background" />
 
-    <TextView
-        android:id="@+id/widget_stackView_recipe_ingredients"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_5dp"
-        android:text="@string/demo_content"
-        android:textColor="@android:color/white"
-        android:textStyle="italic" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/widget_recipe_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dimen_5dp"
+            android:gravity="center|top"
+            android:text="@string/recipe_name"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/dimen_25dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:textSize="@dimen/text_15sp"
+            android:id="@+id/widget_recipe_ingredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_5dp"
+            android:text="@string/demo_content"
+            android:textColor="@color/primary_text"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+</FrameLayout>

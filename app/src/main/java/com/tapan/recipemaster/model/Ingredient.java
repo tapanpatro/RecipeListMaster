@@ -1,4 +1,4 @@
-package com.tapan.recipemaster;
+package com.tapan.recipemaster.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -9,9 +9,9 @@ import android.os.Parcelable;
 
 public class Ingredient implements Parcelable {
 
-    double quantity;
-    String measure;
-    String ingredients;
+    public double quantity;
+    public String measure;
+    public String ingredients;
 
     public Ingredient(double quantity , String measure ,String ingredients){
         this.quantity = quantity;

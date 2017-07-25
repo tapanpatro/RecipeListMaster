@@ -1,4 +1,4 @@
-package com.tapan.recipemaster;
+package com.tapan.recipemaster.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -16,6 +16,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.tapan.recipemaster.R;
+import com.tapan.recipemaster.activity.RecipeDetailActivity;
+import com.tapan.recipemaster.model.Ingredient;
+import com.tapan.recipemaster.model.Recipe;
+import com.tapan.recipemaster.model.Step;
 import com.tapan.recipemaster.utils.AppConfig;
 
 import org.json.JSONArray;
@@ -70,7 +75,7 @@ public class WidgetService extends RemoteViewsService {
                 @Override
                 public void onResponse(JSONArray response) {
                     recipeArrayList = parseRecipeJson(response);
-                    appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId,R.id.widget_stackView);
+                    appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.widget_stackView);
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -87,6 +92,7 @@ public class WidgetService extends RemoteViewsService {
                 try{
                     int recipeId;
                     String name;
+                    String imageurl;
                     ArrayList<Ingredient> ingredients;
                     ArrayList<Step> steps;
                     int servings;
@@ -95,6 +101,7 @@ public class WidgetService extends RemoteViewsService {
                         JSONObject obj = response.getJSONObject(i);
                         recipeId = obj.getInt("id");
                         name = obj.getString("name");
+                        imageurl = obj.getString("image");
                         ingredients = new ArrayList<>();
                         steps = new ArrayList<>();
                         JSONArray ingredientsJsonArray = obj.getJSONArray("ingredients");
@@ -118,7 +125,7 @@ public class WidgetService extends RemoteViewsService {
                             String thumbnailUrl = stepsJsonObject.getString("thumbnailURL");
                             steps.add(new Step(stepId,shortDescription,description,videoUrl,thumbnailUrl));
                         }
-                        returnedRecipeList.add(new Recipe(recipeId,name,ingredients,steps,servings));
+                        returnedRecipeList.add(new Recipe(recipeId,name,imageurl, ingredients,steps,servings));
                     }
                 }catch (JSONException e){
                     e.printStackTrace();
@@ -149,22 +156,39 @@ public class WidgetService extends RemoteViewsService {
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(),R.layout.single_item_widget);
             if (recipeArrayList !=null){
                 ingredientsList = recipeArrayList.get(position).ingredientsArrayList;
-                /*StringBuilder ingredientDescription = new StringBuilder();
-                for (Ingredient ingredient: ingredientsList){
-                    ingredientDescription.append(" * ");
-                    ingredientDescription.append(ingredient.quantity);
-                    ingredientDescription.append(" ");
-                    ingredientDescription.append(ingredient.measure);
-                    ingredientDescription.append(" - ");
-                    ingredientDescription.append(ingredient.ingredients);
-                    ingredientDescription.append("\n");
+                /*String ingredients = ingredientsList.get(position).ingredients +
+                        "(" + ingredientsList.get(position).measure +
+                        " [" + ingredientsList.get(position).quantity + "]" +
+                        ") ";*/
+                StringBuilder ingredients = new StringBuilder();
+                for (Ingredient objIng: ingredientsList){
+                    //ingredients = "*"+ingredient.quantity+" "+ingredient.measure+" - "+ingredient.ingredients;
+                    ingredients.append(objIng.ingredients);
+                    ingredients.append("( ");
+                    ingredients.append(objIng.measure);
+                    ingredients.append("[ ");
+                    ingredients.append(objIng.quantity);
+                    ingredients.append(" ]");
+                    ingredients.append(" )");
+                    ingredients.append("\n");
+                    //ingredients += ingredients + ",";
+                }
+
+               /* for (int i = 0;i<recipeArrayList.size();i++) {
+                    ingredients += ingredients + ",";
                 }*/
-                remoteViews.setTextViewText(R.id.widget_stackview_recipe_title,recipeArrayList.get(position).name);
-                remoteViews.setTextViewText(R.id.widget_stackView_recipe_ingredients,String.valueOf(ingredientsList.get(position).quantity));
+                remoteViews.setTextViewText(R.id.widget_recipe_title,recipeArrayList.get(position).name);
+                remoteViews.setTextViewText(R.id.widget_recipe_ingredients,ingredients);
+
+
+                // Fill in the onClick PendingIntent Template using the specific plant Id for each item individually
                 Bundle bundle = new Bundle();
-                bundle.putInt("extra_position", position);
+                bundle.putLong(RecipeDetailActivity.EXTRA_PLANT_ID, recipeArrayList.get(position).recipeId);
                 Intent fillInIntent = new Intent();
                 fillInIntent.putExtras(bundle);
+                remoteViews.setOnClickFillInIntent(R.id.widget_recipe_title, fillInIntent);
+
+
             }else {
 
             }
@@ -197,8 +221,6 @@ public class WidgetService extends RemoteViewsService {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-
-
         return activeNetworkInfo.isConnected();
     }
 

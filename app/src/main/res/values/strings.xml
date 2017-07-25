@@ -2,9 +2,9 @@
     <string name="app_name">RecipeMaster</string>
     <string name="str_servings">servings</string>
     <string name="str_recipe_name">recipe Name</string>
-    <string name="video_url">Video Url</string>
-    <string name="thumb_url">Thumb Url</string>
-    <string name="description_url">Description Url</string>
+    <string name="video_url">VideoUrl</string>
+    <string name="thumb_url">ThumbUrl</string>
+    <string name="description_url">Description</string>
     <string name="intent_recipe">Recipe</string>
     <string name="steps_details">Step Details</string>
 
@@ -21,4 +21,10 @@
     <string name="add_widget">Add widget</string>
     <string name="recipe_name">RecipeName</string>
     <string name="demo_content">Demo Content</string>
+
+
+    <string name="windowNow">WindowStateNow</string>
+    <string name="postionPlay">PlayPosition</string>
+    <string name="play">Play</string>
+
 </resources>
