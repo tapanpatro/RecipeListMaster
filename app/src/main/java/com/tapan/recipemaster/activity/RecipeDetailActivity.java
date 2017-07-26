@@ -22,9 +22,6 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
     public static final String EXTRA_PLANT_ID = "com.tapan.recipemaster.extra.RECIPE_ID";
 
     Recipe recipe;
-    RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
-    VideoDescriptFragment videoDescriptFragment = new VideoDescriptFragment();
-
 
 
     @Override
@@ -44,6 +41,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
 
         ArrayList<Ingredient> ingredientArrayList = recipe.ingredientsArrayList;
         ArrayList<Step> stepsArrayList = recipe.stepsArrayList;
+        RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
 
         //Setting the argument for recipedetailfragment with ingredient list and step list.
         bundle.putParcelableArrayList(getString(R.string.ingredient_extra), ingredientArrayList);
@@ -56,6 +54,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
 
         // When Two pane layout is true
         if (findViewById(R.id.fl_fragment_video_detail) != null) {
+            VideoDescriptFragment videoDescriptFragment = new VideoDescriptFragment();
             Bundle bundleVDetails = new Bundle();
             bundleVDetails.putString(getString(R.string.video_url), stepsArrayList.get(0).videoUrl);
             bundleVDetails.putString(getString(R.string.description_url), stepsArrayList.get(0).description);
@@ -69,6 +68,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
     }
 
 
+
     @Override
     public void onDetailStepItemClicked(Bundle bundle) {
         if (findViewById(R.id.fl_fragment_video_detail) == null) {
@@ -77,6 +77,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
             startActivity(intent);
         } else {
             //for widerScreen
+            VideoDescriptFragment videoDescriptFragment = new VideoDescriptFragment();
             videoDescriptFragment.setArguments(bundle);
             android.support.v4.app.FragmentTransaction videoFragmentTransaction = getSupportFragmentManager().beginTransaction();
             videoFragmentTransaction.replace(R.id.fl_fragment_video_detail, videoDescriptFragment).commit();

@@ -28,6 +28,7 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 import com.squareup.picasso.Picasso;
 import com.tapan.recipemaster.R;
 
@@ -146,7 +147,6 @@ public class VideoDescriptFragment extends Fragment implements ExoPlayer.EventLi
                     new DefaultLoadControl());
 
 
-
             mSimpleExoPlayerView.setPlayer(simpleExoPlayer);
             simpleExoPlayer.addListener(this);
             simpleExoPlayer.setPlayWhenReady(playWhenReady);
@@ -208,11 +208,22 @@ public class VideoDescriptFragment extends Fragment implements ExoPlayer.EventLi
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if ((Util.SDK_INT <= 23 || simpleExoPlayer == null)) {
+            startThePlayer(videoUrl);
+        }
+
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
-        releasePlayer();
-        if (mMediaSessionCompat != null) {
-            mMediaSessionCompat.setActive(false);
+        if (Util.SDK_INT <= 23) {
+            releasePlayer();
+            if (mMediaSessionCompat != null) {
+                mMediaSessionCompat.setActive(false);
+            }
         }
     }
 
@@ -233,6 +244,10 @@ public class VideoDescriptFragment extends Fragment implements ExoPlayer.EventLi
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+
+        if (mStateBuilder == null){
+            return;
+        }
 
         if ((playbackState == ExoPlayer.STATE_READY) && playWhenReady) {
             mStateBuilder.setState(PlaybackStateCompat.STATE_PLAYING, simpleExoPlayer.getCurrentPosition(), 1f);
