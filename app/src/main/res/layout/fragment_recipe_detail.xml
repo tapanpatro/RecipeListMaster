@@ -29,6 +29,7 @@
                     android:textSize="@dimen/text_23sp" />
 
                 <android.support.v7.widget.RecyclerView
+                    android:layout_marginTop="@dimen/dimen_8dp"
                     android:id="@+id/rv_ingredients"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -42,6 +43,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:layout_marginTop="@dimen/dimen_8dp"
                     android:id="@+id/tv_step"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -50,6 +52,7 @@
                     android:textSize="@dimen/text_23sp" />
 
                 <android.support.v7.widget.RecyclerView
+                    android:layout_marginTop="@dimen/dimen_8dp"
                     android:id="@+id/rv_steps"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />

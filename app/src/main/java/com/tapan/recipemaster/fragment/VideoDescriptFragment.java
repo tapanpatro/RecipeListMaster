@@ -28,7 +28,6 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
-import com.google.android.exoplayer2.util.Util;
 import com.squareup.picasso.Picasso;
 import com.tapan.recipemaster.R;
 
@@ -210,7 +209,7 @@ public class VideoDescriptFragment extends Fragment implements ExoPlayer.EventLi
     @Override
     public void onResume() {
         super.onResume();
-        if ((Util.SDK_INT <= 23 || simpleExoPlayer == null)) {
+        if (( simpleExoPlayer == null)) {
             startThePlayer(videoUrl);
         }
 
@@ -219,11 +218,11 @@ public class VideoDescriptFragment extends Fragment implements ExoPlayer.EventLi
     @Override
     public void onPause() {
         super.onPause();
-        if (Util.SDK_INT <= 23) {
+
             releasePlayer();
             if (mMediaSessionCompat != null) {
                 mMediaSessionCompat.setActive(false);
-            }
+
         }
     }
 

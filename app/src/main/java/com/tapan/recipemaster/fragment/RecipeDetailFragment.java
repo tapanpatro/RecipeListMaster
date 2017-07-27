@@ -62,7 +62,8 @@ public class RecipeDetailFragment extends Fragment implements StepsAdapter.Steps
 
     private String KEY_POSITION_ING = "KeyPositionIng";
     private String KEY_POSITION_STEP = "KeyPositionStep";
-
+    long currentVisiblePosition = 0;
+    int topview = 0;
 
     //LayoutManagerSavedState layoutManagerSavedState;
 
@@ -91,7 +92,7 @@ public class RecipeDetailFragment extends Fragment implements StepsAdapter.Steps
         ButterKnife.bind(this, rootView);
         settingAdapterForIngStep();
 
-        if (savedInstanceState != null) {
+       /* if (savedInstanceState != null) {
 
             if (savedInstanceState.containsKey(KEY_POSITION_ING)) {
                 mPositionIng = savedInstanceState.getInt(KEY_POSITION_ING);
@@ -101,7 +102,7 @@ public class RecipeDetailFragment extends Fragment implements StepsAdapter.Steps
                 mPositionStep = savedInstanceState.getInt(KEY_POSITION_STEP);
             }
 
-        }
+        }*/
 
         return rootView;
     }
@@ -132,19 +133,33 @@ public class RecipeDetailFragment extends Fragment implements StepsAdapter.Steps
     }*/
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onPause() {
+        super.onPause();/*
+        mPositionIng= llManager.findFirstVisibleItemPosition();
+        View startView = rv.getChildAt(0);
+        topView = (startView == null) ? 0 : (startView.getTop() - rv.getPaddingTop());*/
 
-        //gridView.smoothScrollToPosition(mPosition);
-        mRecyclerViewIngredients.getLayoutManager().scrollToPosition(mPositionIng);
+        currentVisiblePosition = ((LinearLayoutManager)mRecyclerViewIngredients.getLayoutManager()).findFirstVisibleItemPosition();
+        View startView = mRecyclerViewIngredients.getChildAt(0);
+        topview = (startView == null) ? 0 : (startView.getTop() - mRecyclerViewIngredients.getPaddingTop());
 
-
-        mRecyclerViewSteps.getLayoutManager().scrollToPosition(mPositionStep);
-
+        //currentVisiblePosition = ((LinearLayoutManager)mRecyclerViewIngredients.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
 
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        //((LinearLayoutManager) mRecyclerViewIngredients.getLayoutManager()).scrollToPosition((int) currentVisiblePosition);
+        //currentVisiblePosition = 0;
+
+        if (currentVisiblePosition!= -1) {
+            ((LinearLayoutManager)mRecyclerViewIngredients.getLayoutManager()).scrollToPositionWithOffset((int) currentVisiblePosition, topview);
+        }
+
+    }
+
+   /* @Override
     public void onSaveInstanceState(Bundle outState) {
 
         int scrollPositionIng = mRecyclerViewIngredients.computeVerticalScrollOffset();
@@ -157,9 +172,9 @@ public class RecipeDetailFragment extends Fragment implements StepsAdapter.Steps
         outState.putInt(KEY_POSITION_ING, mPositionIng);
         outState.putInt(KEY_POSITION_STEP, mPositionStep);
         super.onSaveInstanceState(outState);
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
 
         if (mPositionIng != RecyclerView.NO_POSITION) {
@@ -173,7 +188,7 @@ public class RecipeDetailFragment extends Fragment implements StepsAdapter.Steps
         }
 
         super.onViewStateRestored(savedInstanceState);
-    }
+    }*/
 
     private void settingAdapterForIngStep() {
 

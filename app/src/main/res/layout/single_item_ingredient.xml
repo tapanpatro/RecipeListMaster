@@ -6,6 +6,7 @@
 
 
     <TextView
+        android:padding="@dimen/dimen_5dp"
         android:textColor="@color/white"
         android:id="@+id/tv_ingrident"
         android:text=""
