@@ -46,4 +46,40 @@
             android:layout_marginRight="@dimen/padding_8dp"
             android:textSize="@dimen/text_19sp"/>
 
+        <LinearLayout
+            android:visibility="gone"
+            android:padding="@dimen/dimen_5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_previous"
+                android:drawableLeft="@drawable/ic_arrow_back_black_24dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_19sp"
+                android:textAllCaps="false"
+                android:text="@string/vd_previous"
+                android:layout_margin="@dimen/dimen_5dp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:layout_width="@dimen/dimen_0do"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btn_next"
+                android:drawableRight="@drawable/ic_arrow_forward_black_24dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_19sp"
+                android:textAllCaps="false"
+                android:text="@string/vd_next"
+                android:layout_margin="@dimen/dimen_5dp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:layout_width="@dimen/dimen_0do"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+
     </FrameLayout>

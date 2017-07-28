@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,8 +29,19 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 import com.tapan.recipemaster.R;
+import com.tapan.recipemaster.model.Step;
+import com.tapan.recipemaster.utils.Singleton;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static android.content.ContentValues.TAG;
 
@@ -75,6 +87,10 @@ public class VideoDescriptFragment extends Fragment implements ExoPlayer.EventLi
      * @return A new instance of fragment VideoDescriptFragment.
      */
 
+    private Button mButtonPrevious, mButtonNext;
+
+    private int adapter_position = 0;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,14 +103,143 @@ public class VideoDescriptFragment extends Fragment implements ExoPlayer.EventLi
             mPlayBack = savedInstanceState.getLong(getString(R.string.postionPlay));
         }
 
+
         Bundle bundle = getArguments();
         videoUrl = bundle.getString(getString(R.string.video_url));
         description = bundle.getString(getString(R.string.description_url));
         thumbNail = bundle.getString(getString(R.string.thumb_url));
+        adapter_position = bundle.getInt(getString(R.string.position_adapter));
+
+
+        /*String dataString = Singleton.getInstance().getPreference().getData(getActivity());
+        System.out.println("......dataStringV: "+dataString);*/
+
+
+        mButtonPrevious = (Button) rootView.findViewById(R.id.btn_previous);
+        mButtonNext = (Button) rootView.findViewById(R.id.btn_next);
+
+        mButtonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                NextButtonClickListner nextButtonClickListner = (NextButtonClickListner) getActivity();
+
+                Bundle bundleNext = new Bundle();
+                adapter_position++;
+                bundleNext.putString(getString(R.string.video_url),getVideoUrls().get(adapter_position));
+                bundleNext.putString(getString(R.string.description_url),getDescription().get(adapter_position));
+                bundleNext.putString(getString(R.string.thumb_url),getThumbNail().get(adapter_position));
+                bundleNext.putInt(getString(R.string.position_adapter),adapter_position);
+
+                nextButtonClickListner.onNextButtonClick(bundleNext);
+            }
+        });
+
+        mButtonPrevious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                NextButtonClickListner nextButtonClickListner = (NextButtonClickListner) getActivity();
+
+                Bundle bundleNext = new Bundle();
+                adapter_position--;
+                bundleNext.putString(getString(R.string.video_url),getVideoUrls().get(adapter_position));
+                bundleNext.putString(getString(R.string.description_url),getDescription().get(adapter_position));
+                bundleNext.putString(getString(R.string.thumb_url),getThumbNail().get(adapter_position));
+                bundleNext.putInt(getString(R.string.position_adapter),adapter_position);
+
+                nextButtonClickListner.onNextButtonClick(bundleNext);
+
+            }
+        });
+
+        System.out.println("....sizeofArray:" +getVideoUrls().size());
+
+        if (adapter_position == getVideoUrls().size()-1){
+            mButtonNext.setVisibility(View.GONE);
+        }
+
+        if (adapter_position == 0){
+            mButtonPrevious.setVisibility(View.GONE);
+        }
+
+
         setUp(rootView);
 
         return rootView;
     }
+
+    public interface NextButtonClickListner{
+        void onNextButtonClick(Bundle bundle);
+    }
+
+
+    private List<String> getVideoUrls(){
+
+        String dataString = Singleton.getInstance().getPreference().getData(getActivity());
+        Gson gson = new Gson();
+        Type type = new TypeToken<HashMap<Integer, List<Step>>>() {}.getType();
+
+        Map<Integer, List<Step> >myMap = gson.fromJson(dataString,type);
+
+        List<String> videoUrls = new ArrayList<>();
+
+        Set<Map.Entry<Integer, List<Step>>> set = myMap.entrySet();
+
+        for (Map.Entry<Integer, List<Step>> me : set){
+
+            for (int i = 0;i<me.getValue().size();i++){
+                videoUrls.add(me.getValue().get(i).videoUrl);
+            }
+        }
+        return videoUrls;
+    }
+
+    private List<String> getDescription(){
+
+        String dataString = Singleton.getInstance().getPreference().getData(getActivity());
+        Gson gson = new Gson();
+        Type type = new TypeToken<HashMap<Integer, List<Step>>>() {}.getType();
+
+        Map<Integer, List<Step>> myMap = gson.fromJson(dataString,type);
+
+        List<String> descriptions = new ArrayList<>();
+
+        Set<Map.Entry<Integer, List<Step>>> set = myMap.entrySet();
+
+        for (Map.Entry<Integer, List<Step>> me : set){
+
+            for (int i = 0;i<me.getValue().size();i++){
+                descriptions.add(me.getValue().get(i).description);
+            }
+        }
+        return descriptions;
+    }
+
+
+    private List<String> getThumbNail(){
+
+        String dataString = Singleton.getInstance().getPreference().getData(getActivity());
+        Gson gson = new Gson();
+        Type type = new TypeToken<HashMap<Integer, List<Step>>>() {}.getType();
+
+        Map<Integer, List<Step>> myMap = gson.fromJson(dataString,type);
+
+        List<String> thumb = new ArrayList<>();
+
+        Set<Map.Entry<Integer, List<Step>>> set = myMap.entrySet();
+
+        for (Map.Entry<Integer, List<Step>> me : set){
+
+            for (int i = 0;i<me.getValue().size();i++){
+                thumb.add(me.getValue().get(i).thumbnailUrl);
+            }
+        }
+        return thumb;
+    }
+
+
+
 
 
     @Override

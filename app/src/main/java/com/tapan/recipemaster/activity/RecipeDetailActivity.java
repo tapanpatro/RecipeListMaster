@@ -23,6 +23,12 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
 
     Recipe recipe;
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("buttonVisible", true);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +69,12 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
 
             android.support.v4.app.FragmentTransaction videoFragmentTransaction = getSupportFragmentManager().beginTransaction();
             videoFragmentTransaction.add(R.id.fl_fragment_video_detail, videoDescriptFragment).commit();
+        }
+
+
+        if (savedInstanceState != null) {
+            boolean buttonVisible = savedInstanceState.getBoolean("buttonVisible");
+
         }
 
     }

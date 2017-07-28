@@ -11,13 +11,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.tapan.recipemaster.R;
 import com.tapan.recipemaster.adapter.IngredientsAdapter;
 import com.tapan.recipemaster.adapter.StepsAdapter;
 import com.tapan.recipemaster.model.Ingredient;
 import com.tapan.recipemaster.model.Step;
+import com.tapan.recipemaster.utils.Singleton;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,9 +94,37 @@ public class RecipeDetailFragment extends Fragment implements StepsAdapter.Steps
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
 
+
         //getting list of ingredients and steps from detail Activity
         ingredientArrayList = getArguments().getParcelableArrayList(getString(R.string.ingredient_extra));
         stepsArrayList = getArguments().getParcelableArrayList(getString(R.string.step_extra));
+
+
+        String dataString = Singleton.getInstance().getPreference().getData(getActivity());
+        Gson gson = new Gson();
+        Type type = new TypeToken<HashMap<Integer, List<Step>>>() {
+        }.getType();
+
+        Map<Integer, List<Step>> myMap = gson.fromJson(dataString, type);
+
+        if (myMap != null) {
+            if (dataString.length() >= 0) {
+                myMap.put(stepsArrayList.size(), stepsArrayList);
+                String hashMapString = gson.toJson(myMap);
+                Singleton.getInstance().getPreference().saveData(getActivity(), hashMapString);
+            }
+        } else {
+            if (dataString.length() >= 0) {
+                HashMap<Integer, List<Step>> dataMap = new HashMap<>();
+                dataMap.put(stepsArrayList.size(), stepsArrayList);
+                System.out.println("......dataMap: " + dataMap);
+                String dataMapString = gson.toJson(dataMap);
+                System.out.println("......dataString: " + dataMapString);
+                Singleton.getInstance().getPreference().saveData(getActivity(), dataMapString);
+            }
+        }
+        System.out.println("......dataString: " + dataString);
+
 
         //using butter knife to bind the view
         ButterKnife.bind(this, rootView);
@@ -125,12 +160,12 @@ public class RecipeDetailFragment extends Fragment implements StepsAdapter.Steps
         View startView = rv.getChildAt(0);
         topView = (startView == null) ? 0 : (startView.getTop() - rv.getPaddingTop());*/
 
-        currentVisiblePosition_ing = ((LinearLayoutManager)mRecyclerViewIngredients.getLayoutManager()).findFirstVisibleItemPosition();
+        currentVisiblePosition_ing = ((LinearLayoutManager) mRecyclerViewIngredients.getLayoutManager()).findFirstVisibleItemPosition();
         View startView = mRecyclerViewIngredients.getChildAt(0);
         topview = (startView == null) ? 0 : (startView.getTop() - mRecyclerViewIngredients.getPaddingTop());
 
 
-        currentVisiblePosition_step = ((LinearLayoutManager)mRecyclerViewSteps.getLayoutManager()).findFirstVisibleItemPosition();
+        currentVisiblePosition_step = ((LinearLayoutManager) mRecyclerViewSteps.getLayoutManager()).findFirstVisibleItemPosition();
         View startViews = mRecyclerViewSteps.getChildAt(0);
         topView = (startViews == null) ? 0 : (startViews.getTop() - mRecyclerViewSteps.getPaddingTop());
 
@@ -145,13 +180,12 @@ public class RecipeDetailFragment extends Fragment implements StepsAdapter.Steps
         //currentVisiblePosition_ing = 0;
 
         if (currentVisiblePosition_ing != -1) {
-            ((LinearLayoutManager)mRecyclerViewIngredients.getLayoutManager()).scrollToPositionWithOffset((int) currentVisiblePosition_ing, topview);
+            ((LinearLayoutManager) mRecyclerViewIngredients.getLayoutManager()).scrollToPositionWithOffset((int) currentVisiblePosition_ing, topview);
         }
 
         if (currentVisiblePosition_step != -1) {
-            ((LinearLayoutManager)mRecyclerViewSteps.getLayoutManager()).scrollToPositionWithOffset((int) currentVisiblePosition_step, topView);
+            ((LinearLayoutManager) mRecyclerViewSteps.getLayoutManager()).scrollToPositionWithOffset((int) currentVisiblePosition_step, topView);
         }
-
 
 
         //((LinearLayoutManager) mRecyclerViewSteps.getLayoutManager()).scrollToPosition((int) currentVisiblePosition_step);
@@ -192,12 +226,10 @@ public class RecipeDetailFragment extends Fragment implements StepsAdapter.Steps
 
     private void settingAdapterForIngStep() {
 
-
         //setting the adapter for ingredients
         IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(ingredientArrayList);
         mRecyclerViewIngredients.setAdapter(ingredientsAdapter);
         mRecyclerViewIngredients.setLayoutManager(new LinearLayoutManager(getActivity()));
-
 
 
         //setting the adapter for steps
@@ -206,11 +238,11 @@ public class RecipeDetailFragment extends Fragment implements StepsAdapter.Steps
         mRecyclerViewSteps.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         if (currentVisiblePosition_ing != -1) {
-            ((LinearLayoutManager)mRecyclerViewIngredients.getLayoutManager()).scrollToPositionWithOffset((int) currentVisiblePosition_ing, topview);
+            ((LinearLayoutManager) mRecyclerViewIngredients.getLayoutManager()).scrollToPositionWithOffset((int) currentVisiblePosition_ing, topview);
         }
 
         if (currentVisiblePosition_step != -1) {
-            ((LinearLayoutManager)mRecyclerViewSteps.getLayoutManager()).scrollToPositionWithOffset((int) currentVisiblePosition_step, topView);
+            ((LinearLayoutManager) mRecyclerViewSteps.getLayoutManager()).scrollToPositionWithOffset((int) currentVisiblePosition_step, topView);
         }
 
 
@@ -220,6 +252,7 @@ public class RecipeDetailFragment extends Fragment implements StepsAdapter.Steps
     public void onStepItemClicked(int position) {
         DetailStepOnClickListener detailStepOnClickListener = (DetailStepOnClickListener) getActivity();
         Bundle bundle = new Bundle();
+        bundle.putInt(getString(R.string.position_adapter), position);
         bundle.putString(getString(R.string.video_url), stepsArrayList.get(position).videoUrl);
         bundle.putString(getString(R.string.description_url), stepsArrayList.get(position).description);
         bundle.putString(getString(R.string.thumb_url), stepsArrayList.get(position).thumbnailUrl);

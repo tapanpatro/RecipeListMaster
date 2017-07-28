@@ -26,5 +26,8 @@
     <string name="windowNow">WindowStateNow</string>
     <string name="postionPlay">PlayPosition</string>
     <string name="play">Play</string>
+    <string name="vd_previous">Previous</string>
+    <string name="vd_next">Next</string>
+    <string name="position_adapter">position_adapter</string>
 
 </resources>

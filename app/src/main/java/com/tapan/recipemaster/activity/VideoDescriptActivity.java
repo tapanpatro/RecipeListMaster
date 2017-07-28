@@ -10,9 +10,9 @@ import android.view.WindowManager;
 import com.tapan.recipemaster.R;
 import com.tapan.recipemaster.fragment.VideoDescriptFragment;
 
-public class VideoDescriptActivity extends AppCompatActivity {
+public class VideoDescriptActivity extends AppCompatActivity implements VideoDescriptFragment.NextButtonClickListner{
 
-    VideoDescriptFragment videoDescriptFragment = new VideoDescriptFragment();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +30,11 @@ public class VideoDescriptActivity extends AppCompatActivity {
         //creating a new fragment when any fragment does not exists
         if (savedInstanceState == null) {
             //Passing the data to the fragment
+            VideoDescriptFragment videoDescriptFragment = new VideoDescriptFragment();
             videoDescriptFragment.setArguments(getIntent().getExtras());
-
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.fl_fragment_video_detail, videoDescriptFragment).commit();
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.replace(R.id.fl_fragment_video_detail, videoDescriptFragment).commit();
         }
     }
 
@@ -47,4 +48,13 @@ public class VideoDescriptActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onNextButtonClick(Bundle bundle) {
+        VideoDescriptFragment videoDescriptFragment = new VideoDescriptFragment();
+        videoDescriptFragment.setArguments(bundle);
+        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.fl_fragment_video_detail, videoDescriptFragment).commit();
+
+    }
 }
